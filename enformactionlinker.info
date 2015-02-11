@@ -1,0 +1,4 @@
+name = enformActionLinker
+description = links entity form results to drush commands
+core = 7.x
+dependencies[] = entityform
