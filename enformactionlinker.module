@@ -1,1 +1,26 @@
 <?php
+/**
+ * A module which takes in entityform results from a user
+ * Then it translates these results into drush commands
+ * Ultimately the user can set, in this module, what results turn into what drush commands
+ */
+
+/**
+* Implements hook_help()
+*
+* Displays help and module information
+*
+* @param path
+*            which path of the site we're using to display help
+*
+* @param arg
+*            array that holds the current path returned from arg() function
+ */
+
+function enformactionlinker_help($path, $arg){
+	switch ($path){
+	   case "admin/help#enformactionlinker":
+	      return '<p>' . t("Take in results from entity form and convert them in drush commands.") . '</p>';
+	   break;
+	}
+}
