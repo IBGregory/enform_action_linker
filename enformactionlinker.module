@@ -24,3 +24,24 @@ function enformactionlinker_help($path, $arg){
 	   break;
 	}
 }
+
+
+/*
+Any time entityform_entityform_insert is called, I should know that there is a new form answer
+When that happens, I get the results (entity form get submissions)
+Those are passed in to a function in enformactionlinker and compared to pre-determined results
+			ultimately those predetermined results are decided by the user ahead of time, and linked to drush recipe files
+Those results call different drush recipe files
+ */
+
+/**
+ * Implements hook_entityform_insert().
+ */
+function enformactionlinker_entity_insert($entity, $type) {
+  dpm($entity); // just testing to make sure it triggers when a new form is submitted
+
+  $convertFormResults = array();
+  $convertFormResults = entityform_get_submissions("test_data_retrieval", 1);
+
+ dpm($convertFormResults[0]);
+}
