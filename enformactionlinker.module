@@ -38,10 +38,11 @@ Those results call different drush recipe files
  * Implements hook_entityform_insert().
  */
 function enformactionlinker_entity_insert($entity, $type) {
-  dpm($entity); // just testing to make sure it triggers when a new form is submitted
+ dpm($entity); // just testing to make sure it triggers when a new form is submitted
 
   $convertFormResults = array();
-  $convertFormResults = entityform_get_submissions("test_data_retrieval", 1);
+  $convertFormResults[0] = $entity->field_test_action_one['und'][0]['value'];
+  $convertFormResults[1] = $entity->field_test_action_two['und'][0]['value'];
 
- dpm($convertFormResults[0]);
+ dpm($convertFormResults);
 }
