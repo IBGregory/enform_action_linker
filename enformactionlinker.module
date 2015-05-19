@@ -40,9 +40,15 @@ Those results call different drush recipe files
 function enformactionlinker_entity_insert($entity, $type) {
  dpm($entity); // just testing to make sure it triggers when a new form is submitted
 
-  $convertFormResults = array();
-  $convertFormResults[0] = $entity->field_test_action_one['und'][0]['value'];
-  $convertFormResults[1] = $entity->field_test_action_two['und'][0]['value'];
 
+  $entityProperties = array();
+  $entityProperties = get_object_vars($entity);
+  dpm($entityProperties);
+  $convertFormResults = array();
+  for($i = 0; $i < count($entityProperties); $i++)
+  {
+  	 if (strpos($entityProperties[$i], 'field_') != 0) {
+    	$convertFormResults[] = $entity->{$name}['und'][0]['value']; }
+  }
  dpm($convertFormResults);
 }
