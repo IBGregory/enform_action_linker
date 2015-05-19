@@ -45,10 +45,9 @@ function enformactionlinker_entity_insert($entity, $type) {
   $entityProperties = get_object_vars($entity);
   dpm($entityProperties);
   $convertFormResults = array();
-  for($i = 0; $i < count($entityProperties); $i++)
-  {
-  	 if (strpos($entityProperties[$i], 'field_') != 0) {
-    	$convertFormResults[] = $entity->{$name}['und'][0]['value']; }
+  foreach($entityProperties as $key => $value) {
+  	 if (strpos($key, 'field_') != 0 && isset($value['und'][0]['value'])) {
+    	$convertFormResults[] = $value['und'][0]['value']; }
   }
  dpm($convertFormResults);
 }
