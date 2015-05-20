@@ -46,7 +46,7 @@ function enformactionlinker_entity_insert($entity, $type) {
   dpm($entityProperties);
   $convertFormResults = array();
   foreach($entityProperties as $key => $value) {
-  	 if (strpos($key, 'field_') != 0 && isset($value['und'][0]['value'])) {
+  	 if (strpos($key, 'field_') === 0 && isset($value['und'][0]['value'])) {
     	$convertFormResults[] = $value['und'][0]['value']; }
   }
  dpm($convertFormResults);
