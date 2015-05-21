@@ -20,7 +20,7 @@
 function enformactionlinker_help($path, $arg){
 	switch ($path){
 	   case "admin/help#enformactionlinker":
-	      return '<p>' . t("Take in results from entity form and convert them in drush commands.") . '</p>';
+	      return '<p>' . t("Take in results from entity form and convert them into drush recipe commands.") . '</p>';
 	   break;
 	}
 }
@@ -45,9 +45,38 @@ function enformactionlinker_entity_insert($entity, $type) {
   $entityProperties = get_object_vars($entity);
   dpm($entityProperties);
   $convertFormResults = array();
+  $convertFormNames = array();
+  $nameOfFile;
   foreach($entityProperties as $key => $value) {
   	 if (strpos($key, 'field_') === 0 && isset($value['und'][0]['value'])) {
-    	$convertFormResults[] = $value['und'][0]['value']; }
+    	$convertFormResults[] = $value['und'][0]['value'];
+      $convertFormNames[] = $key; }
+     if (strpos($key, 'type') === 0) {
+      $nameOfFile = $value;
+     }
   }
  dpm($convertFormResults);
+ dpm($convertFormNames);
+ dpm($nameOfFile);
+
+ $recipeFile = fopen($nameOfFile, "a");
+
+ /**
+  * TO BE DONE:
+  * Need to allow the admin to set the file path for the file to be written to
+  * At the moment the file is just written to data/Drupal7/
+  * Also, the appends do not create a newline, which needs to be done for the recipes to function (maybe?)
+  * Otherwise, the module functions as intended for any number of true / false files, so long as certain conventions are followed
+  * I will establish the conventions on the page where the admin chooses where the path should be set (form name convention, question name convention, limitations on question types)
+  */
+
+ for($i = 0; $i < count($convertFormResults); $i++)
+ {
+  if($convertFormResults[$i] == 1)
+  {
+    $convertFormNames[$i] = substr($convertFormNames[$i], 6);
+    fwrite($recipeFile, $convertFormNames[$i]);
+  }
+ }
+
 }
