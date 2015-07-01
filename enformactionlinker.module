@@ -65,7 +65,6 @@ function enformactionlinker_entity_insert($entity, $type) {
   * TO BE DONE:
   * Need to allow the admin to set the file path for the file to be written to
   * At the moment the file is just written to data/Drupal7/
-  * Also, the appends do not create a newline, which needs to be done for the recipes to function (maybe?)
   * Otherwise, the module functions as intended for any number of true / false files, so long as certain conventions are followed
   * I will establish the conventions on the page where the admin chooses where the path should be set (form name convention, question name convention, limitations on question types)
   */
@@ -75,7 +74,7 @@ function enformactionlinker_entity_insert($entity, $type) {
   if($convertFormResults[$i] == 1)
   {
     $convertFormNames[$i] = substr($convertFormNames[$i], 6);
-    fwrite($recipeFile, $convertFormNames[$i]);
+    fwrite($recipeFile, $convertFormNames[$i]."\r\n");
   }
  }
 
