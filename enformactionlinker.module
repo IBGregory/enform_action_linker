@@ -47,25 +47,24 @@ function enformactionlinker_entity_insert($entity, $type) {
   $convertFormResults = array();
   $convertFormNames = array();
   $nameOfFile;
-  foreach($entityProperties as $key => $value) {
-  	 if (strpos($key, 'field_') === 0 && isset($value['und'][0]['value'])) {
+  foreach($entityProperties as $key => $value) { // this loop checks the results of the form
+  	 if (strpos($key, 'field_') === 0 && isset($value['und'][0]['value'])) { // and finds and stores the form values in convertFormResults
     	$convertFormResults[] = $value['und'][0]['value'];
-      $convertFormNames[] = $key; }
-     if (strpos($key, 'type') === 0) {
+      $convertFormNames[] = $key; } // it also gets the name of each value in convertFormNames (this is where drush commands are stored)
+     if (strpos($key, 'type') === 0) { // also the name of the form becomes the file name
       $nameOfFile = $value;
      }
   }
  dpm($convertFormResults);
  dpm($convertFormNames);
+ $filePath = "/tmp/";
+ $nameOfFile .= ".drecipe";
  dpm($nameOfFile);
 
- $recipeFile = fopen($nameOfFile, "a");
+ $recipeFile = fopen($filePath . $nameOfFile, "a"); // creating the file, currently just at data/Drupal7
 
  /**
-  * TO BE DONE:
-  * Need to allow the admin to set the file path for the file to be written to
-  * At the moment the file is just written to data/Drupal7/
-  * Otherwise, the module functions as intended for any number of true / false files, so long as certain conventions are followed
+  * The module functions as intended for any number of true / false files, so long as certain conventions are followed
   * I will establish the conventions on the page where the admin chooses where the path should be set (form name convention, question name convention, limitations on question types)
   */
 
@@ -74,7 +73,7 @@ function enformactionlinker_entity_insert($entity, $type) {
   if($convertFormResults[$i] == 1)
   {
     $convertFormNames[$i] = substr($convertFormNames[$i], 6);
-    fwrite($recipeFile, $convertFormNames[$i]."\r\n");
+    fwrite($recipeFile, $convertFormNames[$i] . "\r\n");
   }
  }
 
